@@ -8,4 +8,6 @@ class SyncoApplication
 
 fun main(args: Array<String>) {
 	runApplication<SyncoApplication>(*args)
+
+
 }
