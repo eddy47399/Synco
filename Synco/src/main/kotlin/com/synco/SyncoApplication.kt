@@ -1,4 +1,4 @@
-package com.synco.Synco
+package com.synco
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
