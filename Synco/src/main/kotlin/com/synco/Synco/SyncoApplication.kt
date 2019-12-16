@@ -9,8 +9,11 @@ class SyncoApplication
 
 fun main(args: Array<String>) {
 	runApplication<SyncoApplication>(*args)
+	var synco = syncofun("C:\\Users\\eddy3\\Documents\\Github")
 
-	var location: String = "C:\\Users\\Edward Campbell\\Desktop"
-	syncofun("C:\\Users\\Edward Campbell\\Documents\\GitHub\\Synco\\Synco").syncFilesUP("Test1.txt", "/myOpenFolder/")
+
+	//synco.syncFilesUP("Test3.txt", "/home/myOpenFolder/")
+	//synco.syncFileDelete("Test3.txt", "/myOpenFolder/")
+
 
 }

@@ -13,10 +13,9 @@ class syncofun constructor(location: String){
     var user = "eadmin"
     var password = "Holland36"
     var host = "ehhcampbell.no"
-
     var loci = location
 
-
+    //Laster opp valgt fil til desPath på serveren.
     fun syncFilesUP(filename: String, desPath: String) {
         val srcFilePath = loci +"\\"+filename
         val srcFile = File(srcFilePath)
@@ -34,64 +33,33 @@ class syncofun constructor(location: String){
         val sftpChannel = session.openChannel("sftp") as ChannelSftp
         println("Opening SFTP Channel......")
         sftpChannel.connect()
-        println("OK!")
-
-        println(srcFile.canonicalPath)
-        println("Does file exist?: ${srcFile.exists()}")
-        println(sftpChannel.lpwd())
-
-        println(sftpChannel.home)
-
+        println("SFTP Channel open")
         println("File uploading.....")
 
         sftpChannel.put(stream, "$despath$filename")
         print("File Uploaded")
-
     }//syncFilesUp
 
 
+    //Sletter angitt fil fra serveren.
+    fun syncFileDelete (filename: String, desPath: String){
+        val despath = desPath
 
-    fun syncFilesDown() {
         val jsch = JSch()
         val session = jsch.getSession(user, host)
         session.setPassword(password)
+        println("Connecting.....")
+        session.setConfig("StrictHostKeyChecking", "no")
         session.connect()
+        println("Connected")
 
         val sftpChannel = session.openChannel("sftp") as ChannelSftp
+        println("Opening SFTP Channel......")
         sftpChannel.connect()
+        println("SFTP Channel open")
+        println("Deleting file.....")
 
-        sftpChannel.put("File_from_here", "File_to_here")
-    }//syncFilesDown
-
-    fun syncFilesRemoveFile() {
-        try{
-            val jsch = JSch()
-            val session = jsch.getSession(user, host)
-            session.setPassword(password)
-            session.connect()
-
-            val sftpChannel = session.openChannel("sftp") as ChannelSftp
-            sftpChannel.connect()
-
-            sftpChannel.rm("PathString")
-        }
-        catch(e: JSchException){
-            println("There was an error pleace try again")
-        }
-
-
-    }//syncFilesRemoveFile
-
-    fun syncFilesRemoveDir() {
-        val jsch = JSch()
-        val session = jsch.getSession(user, host)
-        session.setPassword(password)
-        session.connect()
-
-        val sftpChannel = session.openChannel("sftp") as ChannelSftp
-        sftpChannel.connect()
-
-        sftpChannel.rmdir("PathString")
-    }//syncFilesRemoveDir
-
+        sftpChannel.rm("/home/$despath$filename")
+        println("File Deleted")
+    }//syncFileDelete
 }//syncoFun
