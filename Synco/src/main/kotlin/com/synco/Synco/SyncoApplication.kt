@@ -9,7 +9,7 @@ class SyncoApplication
 
 fun main(args: Array<String>) {
 	runApplication<SyncoApplication>(*args)
-	var synco = syncofun("C:\\Users\\eddy3\\Documents\\Github")
+	var synco = syncofun("C:\\Users\\eddy3\\Documents\\Github", "eadmin", "Holland36", "ehhcampbell.no")
 
 
 	//synco.syncFilesUP("Test3.txt", "/home/myOpenFolder/")

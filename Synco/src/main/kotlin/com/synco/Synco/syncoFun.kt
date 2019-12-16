@@ -8,12 +8,12 @@ import java.io.FileInputStream
 import java.nio.file.Paths
 
 
-class syncofun constructor(location: String){
+class syncofun constructor(folderPathToSync: String, username: String, password: String, host: String){
 
-    var user = "eadmin"
-    var password = "Holland36"
-    var host = "ehhcampbell.no"
-    var loci = location
+    var user = username
+    var password = password
+    var host = host
+    var loci = folderPathToSync
 
     //Laster opp valgt fil til desPath på serveren.
     fun syncFilesUP(filename: String, desPath: String) {
