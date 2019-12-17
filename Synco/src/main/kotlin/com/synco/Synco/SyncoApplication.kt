@@ -9,6 +9,8 @@ class SyncoApplication
 
 fun main(args: Array<String>) {
 	runApplication<SyncoApplication>(*args)
+
+
 	//variabler
 	val user: String = "eadmin"
 	val password: String = "Holland36"
@@ -18,7 +20,6 @@ fun main(args: Array<String>) {
 	//Oppretter object
 	val synco = syncofun(folder, user, password, host)
 
-	//Kall:
 	synco.syncoInfo()
 
 	synco.syncFilesUP("Test1.txt", "/home/myOpenFolder/")

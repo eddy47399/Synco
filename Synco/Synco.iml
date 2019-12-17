@@ -98,5 +98,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.2.2.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.6.3" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.26" level="project" />
+    <orderEntry type="library" name="ch.qos.logback:logback-classic:1.2.3" level="project" />
+    <orderEntry type="library" name="ch.qos.logback:logback-core:1.2.3" level="project" />
   </component>
 </module>
