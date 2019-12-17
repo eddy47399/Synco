@@ -9,11 +9,19 @@ class SyncoApplication
 
 fun main(args: Array<String>) {
 	runApplication<SyncoApplication>(*args)
-	var synco = syncofun("C:\\Users\\eddy3\\Documents\\Github", "eadmin", "Holland36", "ehhcampbell.no")
+	//variabler
+	val user: String = "eadmin"
+	val password: String = "Holland36"
+	val host:String ="ehhcampbell.no"
+	val folder:String = "C:\\Users\\Edward Campbell\\Documents\\Test"
 
+	//Oppretter object
+	val synco = syncofun(folder, user, password, host)
 
-	//synco.syncFilesUP("Test3.txt", "/home/myOpenFolder/")
+	//Kall:
+	synco.syncoInfo()
+
+	synco.syncFilesUP("Test1.txt", "/home/myOpenFolder/")
 	//synco.syncFileDelete("Test3.txt", "/myOpenFolder/")
 
-
-}
+}//main

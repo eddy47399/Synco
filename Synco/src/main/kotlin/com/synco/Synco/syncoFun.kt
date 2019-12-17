@@ -15,6 +15,16 @@ class syncofun constructor(folderPathToSync: String, username: String, password:
     var host = host
     var loci = folderPathToSync
 
+    //printer ut info om pålogging til angitt server.
+    fun syncoInfo(){
+        println("Server connection information:")
+        println("Username: $user")
+        println("Password: *******")
+        println("Host: $host")
+        println("Synced folder: $loci")
+        println("")
+    }//syncoInfo
+
     //Laster opp valgt fil til desPath på serveren.
     fun syncFilesUP(filename: String, desPath: String) {
         val srcFilePath = loci +"\\"+filename
@@ -22,44 +32,60 @@ class syncofun constructor(folderPathToSync: String, username: String, password:
         val stream = FileInputStream(srcFile)
         val despath = desPath
 
-        val jsch = JSch()
-        val session = jsch.getSession(user, host)
-        session.setPassword(password)
-        println("Connecting.....")
-        session.setConfig("StrictHostKeyChecking", "no")
-        session.connect()
-        println("Connected")
+        try{
+            val jsch = JSch()
+            val session = jsch.getSession(user, host)
+            session.setPassword(password)
+            println("Connecting to server.....")
+            session.setConfig("StrictHostKeyChecking", "no")
+            session.connect()
+            println("Connected \n")
 
-        val sftpChannel = session.openChannel("sftp") as ChannelSftp
-        println("Opening SFTP Channel......")
-        sftpChannel.connect()
-        println("SFTP Channel open")
-        println("File uploading.....")
+            val sftpChannel = session.openChannel("sftp") as ChannelSftp
+            println("Opening SFTP Channel.....")
+            sftpChannel.connect()
+            println("SFTP Channel open \n")
 
-        sftpChannel.put(stream, "$despath$filename")
-        print("File Uploaded")
+
+            println("File uploading.....")
+            sftpChannel.put(stream, "$despath$filename")
+            println("File Uploaded")
+
+            session.disconnect()
+        }
+        catch (e: JSchException){
+            println("Could not connect to host, try again")
+        }
+
     }//syncFilesUp
 
 
     //Sletter angitt fil fra serveren.
     fun syncFileDelete (filename: String, desPath: String){
         val despath = desPath
+        try{
+            val jsch = JSch()
+            val session = jsch.getSession(user, host)
+            session.setPassword(password)
+            println("Connecting.....")
+            session.setConfig("StrictHostKeyChecking", "no")
+            session.connect()
+            println("Connected")
 
-        val jsch = JSch()
-        val session = jsch.getSession(user, host)
-        session.setPassword(password)
-        println("Connecting.....")
-        session.setConfig("StrictHostKeyChecking", "no")
-        session.connect()
-        println("Connected")
+            val sftpChannel = session.openChannel("sftp") as ChannelSftp
+            println("Opening SFTP Channel......")
+            sftpChannel.connect()
+            println("SFTP Channel open")
+            println("Deleting file.....")
 
-        val sftpChannel = session.openChannel("sftp") as ChannelSftp
-        println("Opening SFTP Channel......")
-        sftpChannel.connect()
-        println("SFTP Channel open")
-        println("Deleting file.....")
+            sftpChannel.rm("/home/$despath$filename")
+            println("File Deleted")
 
-        sftpChannel.rm("/home/$despath$filename")
-        println("File Deleted")
+            session.disconnect()
+        }
+        catch (e: JSchException){
+            println("Could not connect to host, try again")
+        }
+
     }//syncFileDelete
 }//syncoFun
