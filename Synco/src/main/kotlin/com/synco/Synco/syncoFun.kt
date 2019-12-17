@@ -46,7 +46,6 @@ class syncofun constructor(folderPathToSync: String, username: String, password:
             sftpChannel.connect()
             println("SFTP Channel open \n")
 
-
             println("File uploading.....")
             sftpChannel.put(stream, "$despath$filename")
             println("File Uploaded")
