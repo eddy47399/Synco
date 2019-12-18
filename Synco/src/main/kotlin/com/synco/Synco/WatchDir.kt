@@ -82,7 +82,10 @@ internal constructor(dir: Path, private val recursive: Boolean) {
     /**
      * Process all events for keys queued to the watcher
      */
-    internal fun processEvents() {
+    internal fun processEvents(folder: String, user: String, password: String, host: String) {
+
+        val sync = SyncoSync(folder, user, password, host)
+
         while (true) {
 
             // wait for key to be signalled
@@ -115,12 +118,20 @@ internal constructor(dir: Path, private val recursive: Boolean) {
                 // print out event
                 System.out.format("%s: %s\n", event.kind().name(), child)
 
+                when(event.kind().name()){
+                    "ENTRY_CREATE" -> sync.syncFilesUP(child.toAbsolutePath().toString(), sync.convertFilePathToUnix(child.toAbsolutePath().toString()))
+                    "ENTRY_MODIFY" -> sync.syncFilesUP(child.toAbsolutePath().toString(), sync.convertFilePathToUnix(child.toAbsolutePath().toString()))
+                    "ENTRY_DELETE" -> sync.syncFileDelete(child.toAbsolutePath().toString())
+                }
+
                 // if directory is created, and watching recursively, then
                 // register it and its sub-directories
                 if (recursive && kind === ENTRY_CREATE) {
                     try {
                         if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
+                            println("Registering child.............")
                             registerAll(child)
+                            println("All children registered..........")
                         }
                     } catch (x: IOException) {
                         // ignore to keep sample readable
