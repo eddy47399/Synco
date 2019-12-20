@@ -14,7 +14,10 @@ fun upload(localFolder: String, localFilePath: String, desPath: String, channel:
             channel.mkdir(convertFilePathToUnix(localFilePath, localFolder))
         }
         else{
+            var file = File(localFilePath)
+            var fileInputStream = FileInputStream(file)
             channel.put(FileInputStream(File(localFilePath)), desPath)
+            fileInputStream.close()
         }
         println("$localFilePath uploaded")
     }
